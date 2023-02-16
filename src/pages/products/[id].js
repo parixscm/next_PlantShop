@@ -24,7 +24,7 @@ export async function getStaticProps({ params: { id } }) {
       props: {
         product,
       },
-      revalidate: 30,
+      revalidate: parseInt(process.env.REVALIDATE_SECONDS),
     };
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) {

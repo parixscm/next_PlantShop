@@ -1,7 +1,7 @@
 import Head from "next/head";
+import Link from "next/link";
 import Title from "../components/Title";
 import { getProducts } from "lib/products";
-import Link from "next/link";
 
 export default function HomePage({ products }) {
   return (
@@ -30,6 +30,6 @@ export async function getStaticProps() {
     props: {
       products,
     },
-    revalidate: 30,
+    revalidate: parseInt(process.env.REVALIDATE_SECONDS),
   };
 }
