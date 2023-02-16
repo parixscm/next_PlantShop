@@ -2,8 +2,7 @@ import Head from "next/head";
 import Title from "../components/Title";
 import { getProducts } from "lib/products";
 
-// 1-b) fetch products on the server side
-// but with ISR(incremental static regeneration) in getStaticProps
+// 1-c) fetch products on the server side in getServerSideProps
 
 export default function HomePage({ products }) {
   return (
@@ -23,13 +22,12 @@ export default function HomePage({ products }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   const products = await getProducts();
 
   return {
     props: {
       products,
     },
-    revalidate: 60, // 60 = 1 minute
   };
 }

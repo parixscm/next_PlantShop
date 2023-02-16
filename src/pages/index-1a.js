@@ -23,7 +23,6 @@ export default function HomePage({ products }) {
 }
 
 export async function getStaticProps() {
-  console.log("[HomePage] getStaticProps()");
   const products = await getProducts();
 
   return {
