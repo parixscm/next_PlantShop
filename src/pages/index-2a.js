@@ -3,6 +3,9 @@ import Title from "../components/Title";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../lib/products";
 
+// fetch products on the client side (useEffect)
+// directly from an external API
+
 export default function HomePage() {
   const [products, setProducts] = useState([]);
 
