@@ -1,12 +1,10 @@
 import Head from "next/head";
 import Title from "../components/Title";
+import { getProducts } from "lib/products";
 
-const products = [
-  { id: 1, title: "First Product" },
-  { id: 2, title: "Second Product" },
-];
+// 1-a) fetch products on the server side
 
-export default function HomePage() {
+export default function HomePage({ products }) {
   return (
     <>
       <Head>
@@ -22,4 +20,15 @@ export default function HomePage() {
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  console.log("[HomePage] getStaticProps()");
+  const products = await getProducts();
+
+  return {
+    props: {
+      products,
+    },
+  };
 }
