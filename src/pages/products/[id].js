@@ -1,5 +1,6 @@
-import Title from "../../components/Title";
 import Head from "next/head";
+import Title from "../../components/Title";
+import { ApiError } from "lib/api";
 import { getProduct, getProducts } from "lib/products";
 
 export default function ProductPage({ product }) {
@@ -17,13 +18,20 @@ export default function ProductPage({ product }) {
 }
 
 export async function getStaticProps({ params: { id } }) {
-  const product = await getProduct(id);
-
-  return {
-    props: {
-      product,
-    },
-  };
+  try {
+    const product = await getProduct(id);
+    return {
+      props: {
+        product,
+      },
+      revalidate: 30,
+    };
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      return { notFound: true };
+    }
+    throw error;
+  }
 }
 
 export async function getStaticPaths() {
@@ -33,6 +41,6 @@ export async function getStaticPaths() {
     paths: products.map(product => ({
       params: { id: product.id.toString() },
     })),
-    fallback: false,
+    fallback: "blocking",
   };
 }
