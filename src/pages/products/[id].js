@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import Title from "../../components/Title";
 import { ApiError } from "lib/api";
 import { getProduct, getProducts } from "lib/products";
@@ -11,7 +12,20 @@ export default function ProductPage({ product }) {
       </Head>
       <main className="px-6 py-4">
         <Title>{product.title}</Title>
-        <p>{product.description}</p>
+        <div className="flex flex-col lg:flex-row">
+          <div>
+            <Image
+              src={product.imageUrl}
+              alt="product image"
+              width={640}
+              height={480}
+            />
+          </div>
+          <div className="flex-1 mt-4 space-y-2 lg:ml-4 lg:mt-0">
+            <p className="text-sm">{product.description}</p>
+            <p className="text-lg font-bold">{product.price}</p>
+          </div>
+        </div>
       </main>
     </>
   );
@@ -20,6 +34,7 @@ export default function ProductPage({ product }) {
 export async function getStaticProps({ params: { id } }) {
   try {
     const product = await getProduct(id);
+
     return {
       props: {
         product,
