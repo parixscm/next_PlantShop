@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import Title from "../components/Title";
 import { getProducts } from "lib/products";
 import ProductCard from "@/components/ProductCard";
