@@ -16,13 +16,13 @@ export default function SignIn() {
     setPassword("");
     setStatus({ loading: true, error: false });
     try {
-      const response = await fetchJson("http://localhost:1337/api/auth/local", {
+      const response = await fetchJson("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier: email, password }),
+        body: JSON.stringify({ email, password }),
       });
       setStatus({ loading: false, error: false });
-      console.log("response :", response); // 💡 JWT 도착
+      console.log("sign-in: ", response);
     } catch (err) {
       setStatus({ loading: false, error: true });
     }
