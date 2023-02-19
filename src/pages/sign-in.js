@@ -4,8 +4,10 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useState } from "react";
 import { fetchJson } from "../../lib/api";
+import { useRouter } from "next/router";
 
 export default function SignIn() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState({ loading: false, error: false });
@@ -22,7 +24,7 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       });
       setStatus({ loading: false, error: false });
-      console.log("sign-in: ", response);
+      router.push("/");
     } catch (err) {
       setStatus({ loading: false, error: true });
     }
