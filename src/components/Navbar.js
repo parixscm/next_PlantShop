@@ -14,7 +14,11 @@ export default function Navbar() {
       }
     })();
   }, []);
-  console.log("[Navbar]user: ", user);
+
+  const handleSignOut = async () => {
+    await fetchJson("/api/logout");
+    setUser(undefined);
+  };
 
   return (
     <nav className="px-2 py-1 text-sm">
@@ -27,7 +31,7 @@ export default function Navbar() {
           <>
             <li>Welcome! {user.name}</li>
             <li>
-              <button>Sign Out</button>
+              <button onClick={handleSignOut}>Sign Out</button>
             </li>
           </>
         ) : (
