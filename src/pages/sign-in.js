@@ -5,12 +5,14 @@ import Button from "../components/Button";
 import { useState } from "react";
 import { fetchJson } from "../../lib/api";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 export default function SignIn() {
   const router = useRouter();
+  const queryClient = new useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const mutation = useMutation(() =>
     fetchJson("/api/login", {
       method: "POST",
@@ -25,7 +27,8 @@ export default function SignIn() {
     setPassword("");
     try {
       const user = await mutation.mutateAsync();
-      console.log("signed in as: ", user);
+      // 💡 data is updated immediately
+      queryClient.setQueryData("user", user);
       router.push("/");
     } catch (err) {
       //
