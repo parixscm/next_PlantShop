@@ -1,12 +1,9 @@
 import Link from "next/link";
-import { fetchJson } from "lib/api";
-import { useUser } from "hooks/user";
+import { useSignOut, useUser } from "hooks/user";
 
 export default function Navbar() {
   const user = useUser();
-  const handleSignOut = async () => {
-    await fetchJson("/api/logout");
-  };
+  const signOut = useSignOut();
 
   return (
     <nav className="px-2 py-1 text-sm">
@@ -19,7 +16,7 @@ export default function Navbar() {
           <>
             <li>Welcome! {user.name}</li>
             <li>
-              <button onClick={handleSignOut}>Sign Out</button>
+              <button onClick={signOut}>Sign Out</button>
             </li>
           </>
         ) : (

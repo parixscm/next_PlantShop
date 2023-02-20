@@ -4,7 +4,7 @@ import { fetchJson } from "lib/api";
 const USER_QUERY_KEY = "user";
 
 export function useSignIn() {
-  const queryClient = new useQueryClient();
+  const queryClient = useQueryClient();
   const mutation = useMutation(({ email, password }) =>
     fetchJson("/api/login", {
       method: "POST",
@@ -12,7 +12,6 @@ export function useSignIn() {
       body: JSON.stringify({ email, password }),
     })
   );
-
   return {
     signIn: async (email, password) => {
       try {
@@ -25,6 +24,15 @@ export function useSignIn() {
     },
     signInError: mutation.isError,
     signInLoading: mutation.isLoading,
+  };
+}
+
+export function useSignOut() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(() => fetchJson("/api/logout"));
+  return async () => {
+    await mutation.mutateAsync();
+    queryClient.setQueryData(USER_QUERY_KEY, undefined);
   };
 }
 
