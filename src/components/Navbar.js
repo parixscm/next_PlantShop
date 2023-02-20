@@ -14,7 +14,10 @@ export default function Navbar() {
         <li role="separator" className="flex-1"></li>
         {user ? (
           <>
-            <li>Welcome! {user.name}</li>
+            <li>
+              <Link href="/cart">Cart</Link>
+            </li>
+            <li>{user.name}</li>
             <li>
               <button onClick={signOut}>Sign Out</button>
             </li>
